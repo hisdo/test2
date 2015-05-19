@@ -13,11 +13,11 @@ endif
 bin_PROGRAMS =
 
 if BUILD_BITCOIND
-  bin_PROGRAMS += quarkd
+  bin_PROGRAMS += sharkd
 endif
 
 if BUILD_BITCOIN_CLI
-  bin_PROGRAMS += quark-cli
+  bin_PROGRAMS += shark-cli
 endif
 
 SUBDIRS = . $(BUILD_QT) $(BUILD_TEST)
@@ -162,36 +162,36 @@ libbitcoin_cli_a_SOURCES = \
 nodist_libbitcoin_common_a_SOURCES = $(top_srcdir)/src/obj/build.h
 #
 
-# quarkd binary #
-quarkd_LDADD = \
+# sharkd binary #
+sharkd_LDADD = \
   libbitcoin_server.a \
   libbitcoin_cli.a \
   libbitcoin_common.a \
   $(LIBLEVELDB) \
   $(LIBMEMENV)
 if ENABLE_WALLET
-quarkd_LDADD += libbitcoin_wallet.a
+sharkd_LDADD += libbitcoin_wallet.a
 endif
-quarkd_SOURCES = bitcoind.cpp
+sharkd_SOURCES = bitcoind.cpp
 #
 
 if TARGET_WINDOWS
-quarkd_SOURCES += bitcoind-res.rc
+sharkd_SOURCES += bitcoind-res.rc
 endif
 
 AM_CPPFLAGS += $(BDB_CPPFLAGS)
-quarkd_LDADD += $(BOOST_LIBS) $(BDB_LIBS)
+sharkd_LDADD += $(BOOST_LIBS) $(BDB_LIBS)
 
-# quark-cli binary #
-quark_cli_LDADD = \
+# shark-cli binary #
+shark_cli_LDADD = \
   libbitcoin_cli.a \
   libbitcoin_common.a \
   $(BOOST_LIBS)
-quark_cli_SOURCES = bitcoin-cli.cpp
+shark_cli_SOURCES = bitcoin-cli.cpp
 #
 
 if TARGET_WINDOWS
-quark_cli_SOURCES += bitcoin-cli-res.rc
+shark_cli_SOURCES += bitcoin-cli-res.rc
 endif
 
 # NOTE: This dependency is not strictly necessary, but without it make may try to build both in parallel, which breaks the LevelDB build system in a race

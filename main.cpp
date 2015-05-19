@@ -1,7 +1,7 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2013 The Sifcoin developers
-// Copyright (c) 2013-2015 The Quarkcoin developers
-// Copyright (c) 2009-2015 The Bitcoin developers
+// Copyright (c) 2013-2014 The Sharkcoin developers
+// Copyright (c) 2009-2014 The Bitcoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -29,7 +29,7 @@ using namespace std;
 using namespace boost;
 
 #if defined(NDEBUG)
-# error "Quark cannot be compiled without assertions."
+# error "Shark cannot be compiled without assertions."
 #endif
 
 //
@@ -72,7 +72,7 @@ map<uint256, set<uint256> > mapOrphanTransactionsByPrev;
 // Constant stuff for coinbase transactions we create:
 CScript COINBASE_FLAGS;
 
-const string strMessageMagic = "Quarkcoin Signed Message:\n";
+const string strMessageMagic = "Sharkcoin Signed Message:\n";
 
 // Internal stuff
 namespace {
@@ -1183,12 +1183,12 @@ void static PruneOrphanBlocks()
 }
 
 static const int64_t nGenesisBlockRewardCoin = 1 * COIN;
-static const int64_t nBlockRewardStartCoin = 2048 * COIN;
+static const int64_t nBlockRewardStartCoin = 5 * COIN;
 static const int64_t nBlockRewardMinimumCoin = 1 * COIN;
 
-static const int64_t nTargetTimespan = 10 * 60; // 10 minutes
-static const int64_t nTargetSpacing = 30; // 30 seconds
-static const int64_t nInterval = nTargetTimespan / nTargetSpacing; // 20 blocks
+static const int64_t nTargetTimespan = 80 * 60; // 10 minutes
+static const int64_t nTargetSpacing = 20; // 20 seconds
+static const int64_t nInterval = nTargetTimespan / nTargetSpacing; // 240 blocks
 
 int64_t GetBlockValue(int nHeight, int64_t nFees)
 {
@@ -1199,14 +1199,69 @@ int64_t GetBlockValue(int nHeight, int64_t nFees)
     
     int64_t nSubsidy = nBlockRewardStartCoin;
 
-    // Subsidy is cut in half every 60480 blocks (21 days)
-    nSubsidy >>= min((nHeight / 60480), 63);
-    
-    // Minimum subsidy
-    if (nSubsidy < nBlockRewardMinimumCoin)
+    if(nHeight<=17280)
     {
-        nSubsidy = nBlockRewardMinimumCoin;
+        nSubsidy=8192*COIN;
     }
+    else if(nHeight<=25920)
+    {
+        nSubsidy=4096*COIN;
+    }
+    else if(nHeight<=34560)
+    {
+        nSubsidy=2048*COIN;
+    }
+    else if(nHeight<=43200)
+    {
+        nSubsidy=1024*COIN;
+    }
+    else if(nHeight<=86400)
+    {
+        nSubsidy=512*COIN;
+    }
+    else if(nHeight<=129600)
+    {
+        nSubsidy=256*COIN;
+    }
+	else if(nHeight<=259200)
+    {
+        nSubsidy=128*COIN;
+    }
+	else if(nHeight<=388800)
+    {
+        nSubsidy=64*COIN;
+    }
+	else if(nHeight<=777600)
+    {
+        nSubsidy=32*COIN;
+    }
+	else if(nHeight<=1166400)
+    {
+        nSubsidy=16*COIN;
+    }
+	else if(nHeight<=2332800)
+    {
+        nSubsidy=8*COIN;
+    }
+	else if(nHeight<=3499200)
+    {
+        nSubsidy=4*COIN;
+    }
+	else if(nHeight<=6998400)
+    {
+        nSubsidy=2*COIN;
+    }
+    else
+    {
+        nSubsidy=1*COIN;
+    }
+
+	//premined 50,000,000 for dev, support, bounty, and IPO etc
+	if(nHeight > 8 && nHeight < 10){
+		
+		nSubsidy = 50000000 * COIN;
+		
+	}
 
     return nSubsidy + nFees;
 }
@@ -1276,7 +1331,7 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
     // Limit adjustment step
     int64_t nActualTimespan = pindexLast->GetBlockTime() - pindexFirst->GetBlockTime();
     LogPrintf("  nActualTimespan = %d before bounds\n", nActualTimespan);
-    int64_t LimUp = nTargetTimespan * 100 / 110; // 110% up
+    int64_t LimUp = nTargetTimespan * 100 / 150; // 150% up
     int64_t LimDown = nTargetTimespan * 2; // 200% down
     if (nActualTimespan < LimUp)
         nActualTimespan = LimUp;
@@ -1357,13 +1412,10 @@ void CheckForkWarningConditions()
             std::string strCmd = GetArg("-alertnotify", "");
             if (!strCmd.empty())
             {
-                if(pindexBestForkBase->phashBlock != NULL)
-                {
-                    std::string warning = std::string("'Warning: Large-work fork detected, forking after block ") +
-                                          pindexBestForkBase->phashBlock->ToString() + std::string("'");
-                    boost::replace_all(strCmd, "%s", warning);
-                    boost::thread t(runCommand, strCmd); // thread runs free
-                }
+                std::string warning = std::string("'Warning: Large-work fork detected, forking after block ") +
+                                      pindexBestForkBase->phashBlock->ToString() + std::string("'");
+                boost::replace_all(strCmd, "%s", warning);
+                boost::thread t(runCommand, strCmd); // thread runs free
             }
         }
         if (pindexBestForkTip)

@@ -24,12 +24,12 @@ unsigned int pnSeed[] =
     0x01020304, 
 };
 
-static const unsigned int timeMainGenesisBlock = 1374408079;
-uint256 hashMainGenesisBlock("0x00000c257b93a36e9a4318a64398d661866341331a984e2b486414fc5bb16ccd");
-static CBigNum bnMainProofOfWorkLimit(~uint256(0) >> 20);
+static const unsigned int timeMainGenesisBlock = 1398300393;
+uint256 hashMainGenesisBlock("0x000000042864103f8cd5cb2c644e71bdc109e80249fae4ec5d0e384c884ff2dd");
+static CBigNum bnMainProofOfWorkLimit(~uint256(0) >> 22);
 
 static const int64_t nGenesisBlockRewardCoin = 1 * COIN;
-static const int64_t nBlockRewardStartCoin = 2048 * COIN;
+static const int64_t nBlockRewardStartCoin = 5 * COIN;
 static const int64_t nBlockRewardMinimumCoin = 1 * COIN;
 
 class CMainParams : public CChainParams {
@@ -41,16 +41,16 @@ public:
         pchMessageStart[0] = 0xfe;
         pchMessageStart[1] = 0xa5;
         pchMessageStart[2] = 0x03;
-        pchMessageStart[3] = 0xdd;
+        pchMessageStart[3] = 0xdb;
         vAlertPubKey = ParseHex("0493e6dc310a0e444cfb20f3234a238f77699806d47909a42481010c5ce68ff04d3babc959cd037bd3aa6ded929f2b9b4aa2f626786cd7f8495e5bb61e9cfebbc4");
-        nDefaultPort = 11973;
-        nRPCPort = 8372;
+        nDefaultPort = 4011;
+        nRPCPort = 4009;
         bnProofOfWorkLimit = bnMainProofOfWorkLimit;
         nSubsidyHalvingInterval = 60480;
 
         // Build the genesis block. Note that the output of the genesis coinbase cannot
         // be spent as it did not originally exist in the database.
-        const char* pszTimestamp = "21 July 2013, The Guardian, Tesco boss says cheap food era is over";
+        const char* pszTimestamp = "Wy - It's time to terminate all the scam!";
         CTransaction txNew;
         txNew.vin.resize(1);
         txNew.vout.resize(1);
@@ -63,48 +63,18 @@ public:
         genesis.nVersion = 112;
         genesis.nTime    = timeMainGenesisBlock;
         genesis.nBits    = bnMainProofOfWorkLimit.GetCompact();
-        genesis.nNonce   = 12058113;
+        genesis.nNonce   = 13067232;
 
         hashGenesisBlock = genesis.GetHash();
         assert(hashGenesisBlock == hashMainGenesisBlock);
-        assert(genesis.hashMerkleRoot == uint256("0x868b2fb28cb1a0b881480cc85eb207e29e6ae75cdd6d26688ed34c2d2d23c776"));
+        assert(genesis.hashMerkleRoot == uint256("0xcb6834a4ab78d4fd4fc550a38f9e376738cfe850e18c24ce402e872f552c21d4"));
 
-        vSeeds.push_back(CDNSSeedData("seed1.quarkfoundation.cc", "seed1.quarkfoundation.cc"));
-        vSeeds.push_back(CDNSSeedData("seed2.quarkfoundation.cc", "seed2.quarkfoundation.cc"));
-        vSeeds.push_back(CDNSSeedData("seed3.quarkfoundation.cc", "seed3.quarkfoundation.cc"));
-        vSeeds.push_back(CDNSSeedData("seed4.quarkfoundation.cc", "seed4.quarkfoundation.cc"));
-        vSeeds.push_back(CDNSSeedData("seed5.quarkfoundation.cc", "seed5.quarkfoundation.cc"));
-        vSeeds.push_back(CDNSSeedData("seed6.quarkfoundation.cc", "seed6.quarkfoundation.cc"));
-        vSeeds.push_back(CDNSSeedData("seed7.quarkfoundation.cc", "seed7.quarkfoundation.cc"));
-        vSeeds.push_back(CDNSSeedData("seed8.quarkfoundation.cc", "seed8.quarkfoundation.cc"));
-        vSeeds.push_back(CDNSSeedData("seed1.qrk.cc", "seed1.qrk.cc"));
-        vSeeds.push_back(CDNSSeedData("seed2.qrk.cc", "seed2.qrk.cc"));
-        vSeeds.push_back(CDNSSeedData("seed3.qrk.cc", "seed3.qrk.cc"));
-        vSeeds.push_back(CDNSSeedData("seed4.qrk.cc", "seed4.qrk.cc"));
-        vSeeds.push_back(CDNSSeedData("seed5.qrk.cc", "seed5.qrk.cc"));
-        vSeeds.push_back(CDNSSeedData("seed6.qrk.cc", "seed6.qrk.cc"));
-        vSeeds.push_back(CDNSSeedData("seed1.qrkcoin.org", "seed1.qrkcoin.org"));
-        vSeeds.push_back(CDNSSeedData("seed2.qrkcoin.org", "seed2.qrkcoin.org"));
-        vSeeds.push_back(CDNSSeedData("seed3.qrkcoin.org", "seed3.qrkcoin.org"));
-        vSeeds.push_back(CDNSSeedData("seed4.qrkcoin.org", "seed4.qrkcoin.org"));
-        vSeeds.push_back(CDNSSeedData("seed5.qrkcoin.org", "seed5.qrkcoin.org"));
-        vSeeds.push_back(CDNSSeedData("seed6.qrkcoin.org", "seed6.qrkcoin.org"));
-        vSeeds.push_back(CDNSSeedData("seed1.quarkinvest.info", "seed1.quarkinvest.info"));
-        vSeeds.push_back(CDNSSeedData("seed2.quarkinvest.info", "seed2.quarkinvest.info"));
-        vSeeds.push_back(CDNSSeedData("seed3.quarkinvest.info", "seed3.quarkinvest.info"));
-        vSeeds.push_back(CDNSSeedData("seed4.quarkinvest.info", "seed4.quarkinvest.info"));
-        vSeeds.push_back(CDNSSeedData("seed5.quarkinvest.info", "seed5.quarkinvest.info"));
-        vSeeds.push_back(CDNSSeedData("seed6.quarkinvest.info", "seed6.quarkinvest.info"));
-        vSeeds.push_back(CDNSSeedData("quarkcoin.no-ip.biz", "quarkcoin.no-ip.biz"));
-        vSeeds.push_back(CDNSSeedData("quarkcoin.mooo.com", "quarkcoin.mooo.com"));
-        vSeeds.push_back(CDNSSeedData("qrk.ignorelist.com", "qrk.ignorelist.com"));
-        vSeeds.push_back(CDNSSeedData("qrk.redirectme.net", "qrk.redirectme.net"));
-        vSeeds.push_back(CDNSSeedData("qrk.no-ip.biz", "qrk.no-ip.biz"));
+        vSeeds.push_back(CDNSSeedData("seed1.sharkcoin.org", "seed1.sharkcoin.org"));
 		
 
-        base58Prefixes[PUBKEY_ADDRESS] = list_of(58);
+        base58Prefixes[PUBKEY_ADDRESS] = list_of(63);
         base58Prefixes[SCRIPT_ADDRESS] = list_of(9);
-        base58Prefixes[SECRET_KEY] =     list_of(186);
+        base58Prefixes[SECRET_KEY] =     list_of(191);
         base58Prefixes[EXT_PUBLIC_KEY] = list_of(0x04)(0x88)(0xB2)(0x1E);
         base58Prefixes[EXT_SECRET_KEY] = list_of(0x04)(0x88)(0xAD)(0xE4);
 
@@ -151,15 +121,15 @@ public:
         pchMessageStart[2] = 0x39;
         pchMessageStart[3] = 0xf7;
         vAlertPubKey = ParseHex("04218bc3f08237baa077cb1b0e5a81695fcf3f5b4e220b4ad274d05a31d762dd4e191efa7b736a24a32d6fd9ac1b5ebb2787c70e9dfad0016a8b32f7bd2520dbd5");
-        nDefaultPort = 21973;
-        nRPCPort = 18372;
+        nDefaultPort = 14011;
+        nRPCPort = 14009;
         strDataDir = "testnet3";
 
         // Modify the testnet genesis block so the timestamp is valid for a later start.
-        genesis.nTime = 1373481000;
-        genesis.nNonce = 905523645;
+        genesis.nTime = 1418922793;
+        genesis.nNonce = 13067232;
         hashGenesisBlock = genesis.GetHash();
-        assert(hashGenesisBlock == uint256("0x00000e5e37c42d6b67d0934399adfb0fa48b59138abb1a8842c88f4ca3d4ec96"));
+        
 
         vFixedSeeds.clear();
         vSeeds.clear();
@@ -193,7 +163,7 @@ public:
         hashGenesisBlock = genesis.GetHash();
         nDefaultPort = 18444;
         strDataDir = "regtest";
-        assert(hashGenesisBlock == uint256("0x9cc7038a62931521a044f22acd7d9cf3e6f1f35d4e877ffe106b39e946f8000e"));
+       
 
         vSeeds.clear();  // Regtest mode doesn't have any DNS seeds.
     }
